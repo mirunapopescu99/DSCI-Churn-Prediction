@@ -12,3 +12,12 @@ Customer churn is a key business challenge in the retail and e-commerce space. B
 - Define churn based on inactivity or reduced spend
 - Use ML models to predict which customers are at risk
 - Explore key factors like recency, frequency, and spend habits
+
+## ⚙️ Environment Setup
+
+We use Conda to manage dependencies in an isolated environment.
+
+### Step 1: Create a Conda Environment
+
+```bash
+conda create --name dspt python=3.10
