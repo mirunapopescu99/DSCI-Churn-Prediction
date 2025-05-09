@@ -20,21 +20,21 @@ We use Conda to manage dependencies in an isolated environment.
 ### Step 1: Create a Conda Environment
 
 ```bash
-conda create --name dspt python=3.10
+conda create --name dspt python=3.10 
 
 ### Step 2: Activate The Enviroment
 
-```bash
+
 conda activate dspt
 
 ### Step 3: Download Required Packes
 
-```bash
+
 conda install pandas numpy scikit-learn matplotlib seaborn jupyter
 
 ### Step 4: Add Jupitor Kernel 
 
-```bash
+
 python -m ipykernel install --user --name=dspt --display-name "Python (dspt)"
 
 
