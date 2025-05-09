@@ -26,17 +26,20 @@ conda create --name dspt python=3.10
 ### Step 2: Activate The Enviroment
 
 
-```conda activate dspt
+```
+conda activate dspt
 ```
 
 ### Step 3: Download Required Packes
 
-
+```
 conda install pandas numpy scikit-learn matplotlib seaborn jupyter
+```
 
 ### Step 4: Add Jupitor Kernel 
 
-
+```
 python -m ipykernel install --user --name=dspt --display-name "Python (dspt)"
+```
 
 
