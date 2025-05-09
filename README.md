@@ -19,13 +19,15 @@ We use Conda to manage dependencies in an isolated environment.
 
 ### Step 1: Create a Conda Environment
 
-```bash
-conda create --name dspt python=3.10 
+```
+conda create --name dspt python=3.10
+```
 
 ### Step 2: Activate The Enviroment
 
 
-conda activate dspt
+```conda activate dspt
+```
 
 ### Step 3: Download Required Packes
 
