@@ -31,3 +31,20 @@ def clean_data(df):
 
     print(f"Cleaned DataFrame has {df.shape[0]} rows and {df.shape[1]} columns.")
     return df
+
+def create_features(df):
+    """
+    Create features for churn prediction using RFM model (Recency, Frequency, Monetary).
+    """
+    # Convert InvoiceDate to datetime
+    df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'], errors='coerce')
+    print("InvoiceDate dtype after conversion:", df['InvoiceDate'].dtype)
+
+    # Check and handle invalid dates
+    invalid_dates = df['InvoiceDate'].isna().sum()
+    if invalid_dates > 0:
+        print(f"Warning: There are {invalid_dates} invalid dates in the 'InvoiceDate' column.")
+        # Optionally, drop rows with invalid dates (if they are not critical)
+        df = df.dropna(subset=['InvoiceDate'])
+
+    cutoff_date = pd.to_datetime("2011-12-10")  # or another fixed date before last invoice date
