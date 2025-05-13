@@ -83,4 +83,36 @@ def create_features(df):
     print(f"Features Created: {customer_data.shape[1]} columns")
     return customer_data
 
+# Build and Train the Model
+def build_model(df):
+    """
+    Build and train a Random Forest model to predict customer churn.
+    """
+    # Split data into features (X) and target (y)
+    X = df[['Recency', 'Frequency', 'Monetary', 'Average_Spend']]
+    y = df['Churn']
+
+    # Split the data into train and test sets (80% train, 20% test)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # Preprocessing Pipeline 
+    numerical_features = ['Recency', 'Frequency', 'Monetary', 'Average_Spend']
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', StandardScaler(), numerical_features)
+        ]
+    )
+
+    pipeline = Pipeline(steps=[
+        ('preprocessor', preprocessor),
+        ('classifier', RandomForestClassifier(random_state=42))
+    ])
+
+    # Hyperparameter Tuning with GridSearchCV
+    param_grid = {
+        'classifier__n_estimators': [50, 100],
+        'classifier__max_depth': [5, 10, None],
+        'classifier__min_samples_split': [2, 5, 10]
+    }
+
 
