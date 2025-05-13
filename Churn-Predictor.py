@@ -54,3 +54,33 @@ def create_features(df):
       print("Error: InvoiceDate is not datetime!")
       return df  # Stop processing if InvoiceDate is not datetime
 
+ # Confirm InvoiceDate is datetime
+    if not np.issubdtype(df['InvoiceDate'].dtype, np.datetime64):
+       print("Error: InvoiceDate is not in datetime format!")
+       return df  # Optional safeguard
+
+
+# Calculate Recency as days since last purchase relative to cutoff_date
+    df['Recency'] = (cutoff_date - df['InvoiceDate']).dt.days
+
+
+    # Group by Customer ID and aggregate features
+    customer_data = df.groupby('Customer ID').agg({
+        'Recency': 'min',  
+        'Invoice': 'count', 
+        'Price': 'sum',  
+    }).reset_index()
+
+    # Rename columns 
+    customer_data.rename(columns={'Invoice': 'Frequency', 'Price': 'Monetary'}, inplace=True)
+
+    # Average Spend per Transaction
+    customer_data['Average_Spend'] = customer_data['Monetary'] / customer_data['Frequency']
+
+    # Create a binary churn column: customers with no purchases in the last 180 days are considered churned
+    customer_data['Churn'] = np.where(customer_data['Recency'] > 180, 1, 0)  # 180 days = 6 months
+
+    print(f"Features Created: {customer_data.shape[1]} columns")
+    return customer_data
+
+
