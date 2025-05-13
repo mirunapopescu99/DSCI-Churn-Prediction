@@ -115,4 +115,21 @@ def build_model(df):
         'classifier__min_samples_split': [2, 5, 10]
     }
 
+grid_search = GridSearchCV(pipeline, param_grid, cv=5, scoring='accuracy', n_jobs=-1)
+    grid_search.fit(X_train, y_train)
+
+    print(f"Best Parameters: {grid_search.best_params_}")
+
+    y_pred = grid_search.best_estimator_.predict(X_test)
+
+    print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
+    print(f"Classification Report:\n{classification_report(y_test, y_pred)}")
+
+    cv_scores = cross_val_score(grid_search.best_estimator_, X, y, cv=5)
+    print(f"Cross-validated Accuracy: {cv_scores.mean():.4f}")
+
+    ConfusionMatrixDisplay.from_estimator(grid_search.best_estimator_, X_test, y_test)
+    plt.title("Confusion Matrix")
+    plt.show() 
+
 
