@@ -132,4 +132,13 @@ grid_search = GridSearchCV(pipeline, param_grid, cv=5, scoring='accuracy', n_job
     plt.title("Confusion Matrix")
     plt.show() 
 
+if __name__ == "__main__":
+    df = load_data()
+
+    cleaned_df = clean_data(df)
+
+    customer_data = create_features(cleaned_df)
+
+    build_model(customer_data)
+
 
