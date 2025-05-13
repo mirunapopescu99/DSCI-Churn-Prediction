@@ -48,3 +48,9 @@ def create_features(df):
         df = df.dropna(subset=['InvoiceDate'])
 
     cutoff_date = pd.to_datetime("2011-12-10")  # or another fixed date before last invoice date
+
+# Ensure that InvoiceDate is datetime
+    if not np.issubdtype(df['InvoiceDate'].dtype, np.datetime64):
+      print("Error: InvoiceDate is not datetime!")
+      return df  # Stop processing if InvoiceDate is not datetime
+
