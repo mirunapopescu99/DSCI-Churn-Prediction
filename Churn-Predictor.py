@@ -22,11 +22,7 @@ def clean_data(df):
     print("Cleaning the Data...")
 
     df.drop_duplicates(inplace=True)
-
-    # Handle missing values by filling them with 0
     df.fillna(0, inplace=True)
-
-    # Remove negative values in 'Quantity' and 'Price'
     df = df[df['Quantity'] > 0]
 
     print(f"Cleaned DataFrame has {df.shape[0]} rows and {df.shape[1]} columns.")
