@@ -79,15 +79,17 @@ def create_features(df, cutoff_date_str='2011-09-01', churn_window=180):
     return features
 
 
-def build_model(df):
+def build_model(train_df, test_df): 
     """
     Build and train a Random Forest model to predict customer churn.
     """
     feature_cols = ['recency', 'frequency', 'monetary', 'average_spend']
-    X = df[feature_cols]
-    y = df['churn']
+    X_train = train_df[feature_cols]
+    y_train = train_df['churn']
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_test = test_df[feature_cols]
+    y_test = test_df['churn']
+
 
     numerical_features = feature_cols
     preprocessor = ColumnTransformer(
@@ -117,7 +119,7 @@ def build_model(df):
     print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
     print(f"Classification Report:\n{classification_report(y_test, y_pred)}")
 
-    cv_scores = cross_val_score(grid_search.best_estimator_, X, y, cv=5)
+    cv_scores = cross_val_score(grid_search.best_estimator_, X_train, y_train, cv=5)
     print(f"Cross-validated Accuracy: {cv_scores.mean():.4f}")
 
     ConfusionMatrixDisplay.from_estimator(grid_search.best_estimator_, X_test, y_test)
