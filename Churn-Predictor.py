@@ -28,41 +28,55 @@ def clean_data(df):
     print(f"Cleaned DataFrame has {df.shape[0]} rows and {df.shape[1]} columns.")
     return df
 
-def create_features(df):
-    df = df.copy()  # Avoid SettingWithCopyWarning
-
+def create_features(df, cutoff_date_str='2011-09-01', churn_window=180):
+    df = df.copy()
     df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_')
-
     df['invoicedate'] = pd.to_datetime(df['invoicedate'], errors='coerce')
-    print(f"InvoiceDate dtype after conversion: {df['invoicedate'].dtype}")
-
     df = df.dropna(subset=['invoicedate'])
 
-    if not pd.api.types.is_datetime64_any_dtype(df['invoicedate']):
-        print("❌ Error: invoicedate is not datetime!")
-        return None
+    # Set cutoff to the actual last date in the dataset
+    cutoff_date = pd.to_datetime(cutoff_date_str) 
 
-    cutoff_date = pd.to_datetime("2011-12-10")
-    df['recency'] = (cutoff_date - df['invoicedate']).dt.days
 
-    customer_data = df.groupby('customer_id').agg({
-        'recency': 'min',
-        'invoice': pd.Series.nunique,
-        'price': 'sum',
-        'stockcode': 'nunique'
-    }).reset_index()
+    # Split into pre-cutoff and post-cutoff
+    df_before = df[df['invoicedate'] < cutoff_date]
+    df_after = df[df['invoicedate'] >= cutoff_date]
 
-    customer_data.rename(columns={
+
+    features = df_before.groupby('customer_id').agg({
+        'invoicedate': lambda x: (cutoff_date - x.max()).days,
+        'invoice': 'nunique',
+        'quantity': 'sum',
+        'price': 'mean',
+        'description': 'count',
+    }).rename(columns={
+        'invoicedate': 'recency',
         'invoice': 'frequency',
-        'price': 'monetary',
-        'stockcode': 'product_diversity'
-    }, inplace=True) 
+        'quantity': 'total_quantity',
+        'price': 'avg_price',
+        'description': 'total_items' 
+    })
 
-    customer_data['average_spend'] = customer_data['monetary'] / customer_data['frequency']
-    customer_data['churn'] = np.where(customer_data['recency'] > 180, 1, 0)
+    features['monetary'] = df.groupby('customer_id').apply(lambda x: (x['quantity'] * x['price']).sum(), include_groups=False)
+    
+    features['average_spend'] = features['monetary'] / features['frequency'].replace(0, np.nan)
+    features['average_spend'] = features['average_spend'].fillna(0)
 
-    print(f"Features Created: {customer_data.shape[1]} columns")
-    return customer_data
+    last_dates = df_after.groupby('customer_id')['invoicedate'].min()
+    reactivation_days = (last_dates - cutoff_date).dt.days
+
+    # Initialize churn labels: default to 1 (churned)
+    features['churn'] = 1
+
+    # For customers who returned within churn_window, set churn = 0
+    for cust_id, days in reactivation_days.items():
+        if cust_id in features.index and days <= churn_window:
+            features.at[cust_id, 'churn'] = 0 
+
+    print("Features Created:", features.shape[1], "columns")
+    print(features['churn'].value_counts())
+
+    return features
 
 
 def build_model(df):
