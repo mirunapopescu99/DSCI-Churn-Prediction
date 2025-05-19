@@ -65,20 +65,17 @@ def create_features(df):
     return customer_data
 
 
-# Build and Train the Model
 def build_model(df):
     """
     Build and train a Random Forest model to predict customer churn.
     """
-    # Split data into features (X) and target (y)
-    X = df[['Recency', 'Frequency', 'Monetary', 'Average_Spend']]
-    y = df['Churn']
+    feature_cols = ['recency', 'frequency', 'monetary', 'average_spend']
+    X = df[feature_cols]
+    y = df['churn']
 
-    # Split the data into train and test sets (80% train, 20% test)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    # Preprocessing Pipeline 
-    numerical_features = ['Recency', 'Frequency', 'Monetary', 'Average_Spend']
+    numerical_features = feature_cols
     preprocessor = ColumnTransformer(
         transformers=[
             ('num', StandardScaler(), numerical_features)
@@ -90,14 +87,13 @@ def build_model(df):
         ('classifier', RandomForestClassifier(random_state=42))
     ])
 
-    # Hyperparameter Tuning with GridSearchCV
     param_grid = {
         'classifier__n_estimators': [50, 100],
         'classifier__max_depth': [5, 10, None],
         'classifier__min_samples_split': [2, 5, 10]
     }
 
-grid_search = GridSearchCV(pipeline, param_grid, cv=5, scoring='accuracy', n_jobs=-1)
+    grid_search = GridSearchCV(pipeline, param_grid, cv=5, scoring='accuracy', n_jobs=-1)
     grid_search.fit(X_train, y_train)
 
     print(f"Best Parameters: {grid_search.best_params_}")
@@ -112,7 +108,7 @@ grid_search = GridSearchCV(pipeline, param_grid, cv=5, scoring='accuracy', n_job
 
     ConfusionMatrixDisplay.from_estimator(grid_search.best_estimator_, X_test, y_test)
     plt.title("Confusion Matrix")
-    plt.show() 
+    plt.show()
 
 # Feature importance
     best_model = grid_search.best_estimator_
