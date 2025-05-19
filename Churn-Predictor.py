@@ -146,11 +146,16 @@ def build_model(train_df, test_df):
 
 if __name__ == "__main__":
     df = load_data()
-
     cleaned_df = clean_data(df)
-
     customer_data = create_features(cleaned_df)
 
-    build_model(customer_data)
+    if customer_data is not None:
+        train_df, test_df = train_test_split(
+        customer_data,
+        test_size=0.2,
+        random_state=42,
+        stratify=customer_data['churn']
+    )
+    build_model(train_df, test_df)  
 
 
