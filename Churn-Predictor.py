@@ -29,55 +29,41 @@ def clean_data(df):
     return df
 
 def create_features(df):
-    """
-    Create features for churn prediction using RFM model (Recency, Frequency, Monetary).
-    """
-    # Convert InvoiceDate to datetime
-    df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'], errors='coerce')
-    print("InvoiceDate dtype after conversion:", df['InvoiceDate'].dtype)
+    df = df.copy()  # Avoid SettingWithCopyWarning
 
-    # Check and handle invalid dates
-    invalid_dates = df['InvoiceDate'].isna().sum()
-    if invalid_dates > 0:
-        print(f"Warning: There are {invalid_dates} invalid dates in the 'InvoiceDate' column.")
-        # Optionally, drop rows with invalid dates (if they are not critical)
-        df = df.dropna(subset=['InvoiceDate'])
+    df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_')
 
-    cutoff_date = pd.to_datetime("2011-12-10")  # or another fixed date before last invoice date
+    df['invoicedate'] = pd.to_datetime(df['invoicedate'], errors='coerce')
+    print(f"InvoiceDate dtype after conversion: {df['invoicedate'].dtype}")
 
-# Ensure that InvoiceDate is datetime
-    if not np.issubdtype(df['InvoiceDate'].dtype, np.datetime64):
-      print("Error: InvoiceDate is not datetime!")
-      return df  # Stop processing if InvoiceDate is not datetime
+    df = df.dropna(subset=['invoicedate'])
 
- # Confirm InvoiceDate is datetime
-    if not np.issubdtype(df['InvoiceDate'].dtype, np.datetime64):
-       print("Error: InvoiceDate is not in datetime format!")
-       return df  # Optional safeguard
+    if not pd.api.types.is_datetime64_any_dtype(df['invoicedate']):
+        print("❌ Error: invoicedate is not datetime!")
+        return None
 
+    cutoff_date = pd.to_datetime("2011-12-10")
+    df['recency'] = (cutoff_date - df['invoicedate']).dt.days
 
-# Calculate Recency as days since last purchase relative to cutoff_date
-    df['Recency'] = (cutoff_date - df['InvoiceDate']).dt.days
-
-
-    # Group by Customer ID and aggregate features
-    customer_data = df.groupby('Customer ID').agg({
-        'Recency': 'min',  
-        'Invoice': 'count', 
-        'Price': 'sum',  
+    customer_data = df.groupby('customer_id').agg({
+        'recency': 'min',
+        'invoice': pd.Series.nunique,
+        'price': 'sum',
+        'stockcode': 'nunique'
     }).reset_index()
 
-    # Rename columns 
-    customer_data.rename(columns={'Invoice': 'Frequency', 'Price': 'Monetary'}, inplace=True)
+    customer_data.rename(columns={
+        'invoice': 'frequency',
+        'price': 'monetary',
+        'stockcode': 'product_diversity'
+    }, inplace=True) 
 
-    # Average Spend per Transaction
-    customer_data['Average_Spend'] = customer_data['Monetary'] / customer_data['Frequency']
-
-    # Create a binary churn column: customers with no purchases in the last 180 days are considered churned
-    customer_data['Churn'] = np.where(customer_data['Recency'] > 180, 1, 0)  # 180 days = 6 months
+    customer_data['average_spend'] = customer_data['monetary'] / customer_data['frequency']
+    customer_data['churn'] = np.where(customer_data['recency'] > 180, 1, 0)
 
     print(f"Features Created: {customer_data.shape[1]} columns")
     return customer_data
+
 
 # Build and Train the Model
 def build_model(df):
