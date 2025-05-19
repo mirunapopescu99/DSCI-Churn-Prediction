@@ -126,7 +126,7 @@ def build_model(train_df, test_df):
     plt.title("Confusion Matrix")
     plt.show()
 
-# Feature importance
+ # Feature importance 
     best_model = grid_search.best_estimator_
     classifier = best_model.named_steps['classifier']
     importances = classifier.feature_importances_
