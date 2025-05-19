@@ -132,6 +132,24 @@ grid_search = GridSearchCV(pipeline, param_grid, cv=5, scoring='accuracy', n_job
     plt.title("Confusion Matrix")
     plt.show() 
 
+# Feature importance
+    best_model = grid_search.best_estimator_
+    classifier = best_model.named_steps['classifier']
+    importances = classifier.feature_importances_
+
+    feat_importances = pd.DataFrame({
+        'feature': feature_cols,
+        'importance': importances
+    }).sort_values('importance', ascending=False)
+
+    plt.figure(figsize=(8, 6))
+    plt.barh(feat_importances['feature'], feat_importances['importance'], color='skyblue')
+    plt.xlabel('Importance')
+    plt.title('Feature Importances')
+    plt.gca().invert_yaxis()
+    plt.show()
+
+
 if __name__ == "__main__":
     df = load_data()
 
