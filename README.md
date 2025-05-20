@@ -55,3 +55,22 @@ pip freeze > requirements.txt
 Please download the dataset from https://www.kaggle.com/datasets/mashlyn/online-retail-ii-uci/data. Save it as `online_retail_II.csv` in your project folder before running the scripts.
 
 
+## Expected Outputs
+
+- Accuracy score and classification report printed in the terminal.
+- Confusion matrix visualisation.
+- Feature importance plot showing key predictors of customer churn.
+
+
+## Results and Visualisation:
+
+Below are key visualisations from the analysis:
+
+### 1. Confusion Matrix
+![Confusion Matrix](confusion_matrix.png)
+
+### 2. Feature Importance
+![Feature Importance](feature_importances.png) 
+
+
+
