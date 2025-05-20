@@ -8,7 +8,7 @@ This project explores customer churn prediction using real-world e-commerce tran
 
 # Project Overview
 
-Customer churn is a key business challenge in the retail and e-commerce space. By analysing past customer behaviour, we aim to:
+A constant challenge in retail and e-commerce is customer churn which an ongoing challenge. By analysing past customer behaviour, we aim to:
 - Define churn based on inactivity or reduced spend
 - Use ML models to predict which customers are at risk
 - Explore key factors like recency, frequency, and spend habits
@@ -36,7 +36,6 @@ conda create --name dspt python=3.10
 ```
 
 ### Step 2: Activate The Enviroment 
-### Conda is recommended
 
 
 ```
