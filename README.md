@@ -51,6 +51,7 @@ Then run:
 
 ```bash
 pip freeze > requirements.txt
+```
 
 **Dataset Download:**
 Please download the dataset from https://www.kaggle.com/datasets/mashlyn/online-retail-ii-uci/data. Save it as `online_retail_II.csv` in your project folder before running the scripts.
