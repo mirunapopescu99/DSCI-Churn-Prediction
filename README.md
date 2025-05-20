@@ -13,6 +13,18 @@ Customer churn is a key business challenge in the retail and e-commerce space. B
 - Use ML models to predict which customers are at risk
 - Explore key factors like recency, frequency, and spend habits
 
+
+## Approach and Methodology
+  
+1. **Data Loading:** Read raw transaction data from CSV.
+2. **Data Cleaning:** Remove duplicate records, handle missing values, and filter invalid entries.
+3. **Feature Engineering:** Generate features such as recency, frequency, monetary spend, and average spend based on purchase history.
+4. **Model Building:** Use a Random Forest classifier with hyperparameter tuning and cross-validation.
+5. **Evaluation:** Measure model accuracy, generate confusion matrix, and visualise key features.
+
+
+
+
 ## ⚙️ Environment Setup
 
 We use Conda to manage dependencies in an isolated environment.
@@ -23,23 +35,24 @@ We use Conda to manage dependencies in an isolated environment.
 conda create --name dspt python=3.10
 ```
 
-### Step 2: Activate The Enviroment
+### Step 2: Activate The Enviroment 
+### Conda is recommended
 
 
 ```
 conda activate dspt
 ```
 
-### Step 3: Download Required Packes
+### Step 2: Install dependencies
 
-```
-conda install pandas numpy scikit-learn matplotlib seaborn jupyter
-```
+After creating and activating your environment, install the necessary packages. You can install packages manually, or use the `requirements.txt` file 
 
-### Step 4: Add Jupitor Kernel 
+Then run:
 
-```
-python -m ipykernel install --user --name=dspt --display-name "Python (dspt)"
-```
+```bash
+pip freeze > requirements.txt
+
+**Dataset Download:**
+Please download the dataset from https://www.kaggle.com/datasets/mashlyn/online-retail-ii-uci/data. Save it as `online_retail_II.csv` in your project folder before running the scripts.
 
 
