@@ -4,7 +4,6 @@
 
 This project explores customer churn prediction using real-world e-commerce transaction data. The goal is to identify customers at risk of leaving by analysing historical purchase patterns and behaviour.
 
-## Project Structure
 
 # Project Overview
 
