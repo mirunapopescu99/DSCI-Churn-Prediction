@@ -4,6 +4,8 @@
 
 This project explores customer churn prediction using real-world e-commerce transaction data. The goal is to identify customers at risk of leaving by analysing historical purchase patterns and behaviour.
 
+The full main code is in the churn_predictor.py 
+
 
 # Project Overview
 
