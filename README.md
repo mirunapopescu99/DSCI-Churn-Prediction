@@ -1,4 +1,4 @@
-# Churn-Prediction.py
+# Data Science in The Creative Industries: Churn Prediction
 
 # Retail Customer Churn Prediction
 
