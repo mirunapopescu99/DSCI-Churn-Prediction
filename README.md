@@ -43,7 +43,7 @@ conda create --name dspt python=3.10
 conda activate dspt
 ```
 
-### Step 3: Install dependencies
+### Step 3: Install Dependencies
 
 After creating and activating your environment, install the necessary packages. You can install packages manually, or use the `requirements.txt` file 
 
