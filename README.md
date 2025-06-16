@@ -9,9 +9,9 @@ This project explores customer churn prediction using real-world e-commerce tran
 
 # Project Overview
 
-A constant challenge in retail and e-commerce is customer churn which an ongoing challenge. By analysing past customer behaviour, we aim to:
+A constant challenge in retail and e-commerce is customer churn which is an ongoing challenge. By analysing past customer behaviour, we aim to:
 - Define churn based on inactivity or reduced spend
-- Use ML models to predict which customers are at risk
+- Use machine learning models to predict which customers are at risk
 - Explore key factors like recency, frequency, and spend habits
 
 
@@ -57,6 +57,16 @@ pip install -r requirements.txt
 Please download the dataset from https://www.kaggle.com/datasets/mashlyn/online-retail-ii-uci/data. Save it as `online_retail_II.csv` in your project folder before running the scripts.
 
 
+## Usage 
+
+1. Place 'online_retail_II.csv' in your project directory
+2. Run the main script:
+
+```bash
+python churn_predictor.py
+```
+
+   
 ## Expected Outputs
 
 - Accuracy score and classification report printed in the terminal.
