@@ -25,14 +25,14 @@ def load_data(path: str = "online_retail_II.csv") -> pd.DataFrame:
     """
     try:
         df = pd.read_csv(path)
-        print("✅ Data Loaded Successfully")
+        print("Data Loaded Successfully")
         return df
     except FileNotFoundError:
-        print(f"❌ File not found: {path}")
+        print(f"File not found: {path}")
         raise
     except pd.errors.EmptyDataError:
-        print(f"❌ No data: The file at {path} is empty.")
+        print(f"No data: The file at {path} is empty.")
         raise
     except pd.errors.ParserError:
-        print(f"❌ Parsing error: The file at {path} could not be parsed.")
+        print(f"Parsing error: The file at {path} could not be parsed.")
         raise 
