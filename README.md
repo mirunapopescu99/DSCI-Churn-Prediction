@@ -4,7 +4,7 @@
 
 This project explores customer churn prediction using real-world e-commerce transaction data. The goal is to identify customers at risk of leaving by analysing historical purchase patterns and behaviour.
 
-The full main code is in the churn_predictor.py 
+**Note:** The main code is implemented in `churn_predictor.py`. 
 
 
 # Project Overview
@@ -26,7 +26,7 @@ A constant challenge in retail and e-commerce is customer churn which an ongoing
 
 
 
-## ⚙️ Environment Setup
+##  Environment Setup
 
 We use Conda to manage dependencies in an isolated environment.
 
@@ -43,7 +43,7 @@ conda create --name dspt python=3.10
 conda activate dspt
 ```
 
-### Step 2: Install dependencies
+### Step 3: Install dependencies
 
 After creating and activating your environment, install the necessary packages. You can install packages manually, or use the `requirements.txt` file 
 
