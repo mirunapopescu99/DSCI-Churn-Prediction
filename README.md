@@ -36,7 +36,7 @@ We use Conda to manage dependencies in an isolated environment.
 conda create --name dspt python=3.10
 ```
 
-### Step 2: Activate The Enviroment 
+### Step 2: Activate The Environment 
 
 
 ```
