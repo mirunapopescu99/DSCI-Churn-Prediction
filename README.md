@@ -50,7 +50,7 @@ After creating and activating your environment, install the necessary packages. 
 Then run:
 
 ```bash
-pip freeze > requirements.txt
+pip install -r requirements.txt
 ```
 
 **Dataset Download:**
