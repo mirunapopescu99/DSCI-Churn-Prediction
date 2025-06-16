@@ -11,7 +11,7 @@ import os
 def load_data():
     data_path = 'online_retail_II.csv'  
     df = pd.read_csv(data_path)
-    print("✅ Data Loaded Successfully")
+    print("Data Loaded Successfully")
     print(df.head())
     return df
 
