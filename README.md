@@ -1,5 +1,13 @@
 # Data Science in The Creative Industries: Churn Prediction
 
+## Author / Contact
+
+**Name:** Miruna Popescu
+**University Email:** m.popescu0620241@arts.ac.uk
+**Student ID:** 24039973
+
+
+
 # Retail Customer Churn Prediction
 
 This project explores customer churn prediction using real-world e-commerce transaction data. The goal is to identify customers at risk of leaving by analysing historical purchase patterns and behaviour.
