@@ -86,7 +86,7 @@ Below are key visualisations from the analysis:
 
 
 ## Notes: 
-- Too regenerate visualisations, rerun the script.
+- To regenerate visualisations, rerun the script.
 - Adjust hyperparameters or features as needed.
 - Ensure dataset file is correctly named and located.
 - If you encounter issues with missing packages, ensure your environment is correctly set up and dependencies installed via `pip install -r requirements.txt`.
