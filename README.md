@@ -1,4 +1,4 @@
-# Data Science in The Creative Industries: Churn Prediction
+# Data Science in The Creative Industries: The Retail Churn Predictor
 
 ## Author / Contact
 
